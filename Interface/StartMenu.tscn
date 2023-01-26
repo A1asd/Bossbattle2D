@@ -1,0 +1,38 @@
+[gd_scene format=2]
+
+[node name="StartMenuVBox" type="VBoxContainer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -201.5
+margin_top = -398.0
+margin_right = 201.5
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="."]
+margin_top = 153.0
+margin_right = 403.0
+margin_bottom = 173.0
+text = "Start"
+
+[node name="LoadoutButton" type="Button" parent="."]
+margin_top = 177.0
+margin_right = 403.0
+margin_bottom = 197.0
+text = "Loadouts"
+
+[node name="OptionsButton" type="Button" parent="."]
+margin_top = 201.0
+margin_right = 403.0
+margin_bottom = 221.0
+text = "Optionen"
+
+[node name="QuitButton" type="Button" parent="."]
+margin_top = 225.0
+margin_right = 403.0
+margin_bottom = 245.0
+text = "Beenden"

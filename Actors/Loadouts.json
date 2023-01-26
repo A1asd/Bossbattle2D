@@ -1,0 +1,15 @@
+{
+	"loadout1": {
+		"name": "Loadoutname",
+		"skills": {
+			"skill1": "dummyskill",
+			"skill2": "dummyskill1",
+			"skill3": "dummyskill2",
+			"skill4": "dummyskill3",
+			"skill5": "dummyskill4",
+			"skill6": "dummyskill5",
+			"skill7": "dummyskill6",
+			"skill8": "dummyskill7"
+		}
+	}
+}

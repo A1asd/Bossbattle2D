@@ -1,0 +1,50 @@
+{
+	"dummyskill": {
+		"name": "Dummy Skill",
+		"tooltip": "Just a basic Dummy Skill",
+		"icon": "BaseSkillIcon.png",
+		"scene": "BaseSkill.tscn"
+	},
+	"dummyskill1": {
+		"name": "Dummy Skill2",
+		"tooltip": "Just a basic Dummy Skill",
+		"icon": "BaseSkillIcon.png",
+		"scene": "BaseSkill.tscn"
+	},
+	"dummyskill2": {
+		"name": "Dummy Skill4",
+		"tooltip": "Just a basic Dummy Skill",
+		"icon": "BaseSkillIcon.png",
+		"scene": "BaseSkill.tscn"
+	},
+	"dummyskill3": {
+		"name": "Dummy Skill345",
+		"tooltip": "Just a basic Dummy Skill",
+		"icon": "BaseSkillIcon.png",
+		"scene": "BaseSkill.tscn"
+	},
+	"dummyskill4": {
+		"name": "Dummy Skill123123",
+		"tooltip": "Just a basic Dummy Skill",
+		"icon": "BaseSkillIcon.png",
+		"scene": "BaseSkill.tscn"
+	},
+	"dummyskill5": {
+		"name": "Dummy Skill788",
+		"tooltip": "Just a basic Dummy Skill",
+		"icon": "BaseSkillIcon.png",
+		"scene": "BaseSkill.tscn"
+	},
+	"dummyskill6": {
+		"name": "Dummy Skilw3e45rl",
+		"tooltip": "Just a basic Dummy Skill",
+		"icon": "BaseSkillIcon.png",
+		"scene": "BaseSkill.tscn"
+	},
+	"dummyskill7": {
+		"name": "Dummy Skilsdfgl",
+		"tooltip": "Just a basic Dummy Skill",
+		"icon": "BaseSkillIcon.png",
+		"scene": "BaseSkill.tscn"
+	}
+}
