@@ -16,16 +16,16 @@ var flip = 1
 
 signal action_use
 
-onready var animationPlayer = $AnimationPlayer
+@onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 
 func startAnimation(animation):
 	animationPlayer.play(animation)
-	yield(animationPlayer, "animation_finished")
+	await animationPlayer.animation_finished
 	animationPlayer.play(IDLE_ANIMATION_STRING)
 
 func queueAnimation(animation):
 	animationPlayer.queue(animation)
-	yield(animationPlayer, "animation_finished")
+	await animationPlayer.animation_finished
 	animationPlayer.play(IDLE_ANIMATION_STRING)
 
 func input():
@@ -56,7 +56,7 @@ func input():
 	
 	if direction.x != 0 && flip != direction.x:
 		flip = direction.x
-		flip()
+		flip_sprite()
 
 func is_busy():
 	return !moveable
@@ -86,13 +86,13 @@ func _physics_process(delta):
 	input()
 	move(delta)
 
-func flip():
+func flip_sprite():
 	scale.x = -1
 	
 	for node in get_tree().get_nodes_in_group("not_flippable"):
 		if scale.x < 0:
-			node.rect_scale.x *= -1
-	#$Sprite.flip_h = facing
+			node.scale.x *= -1
+	#$Sprite2D.flip_h = facing
 
 ##########
 ### UI ###

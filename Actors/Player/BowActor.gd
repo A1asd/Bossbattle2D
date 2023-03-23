@@ -5,7 +5,7 @@ const BOW_DRAW_ANIMATION_STRING = "Bow_Drawing"
 const BOW_RELEASE_ANIMATION_STRING = "Bow_Release"
 const CURRENT_ANIMATION = IDLE_ANIMATION_STRING
 
-export (bool) var in_chain = false
+@export var in_chain :bool = false
 
 var bow_readied = false
 
@@ -13,7 +13,7 @@ func is_bow_ready():
 	return bow_readied
 
 func input():
-	.input()
+	super.input()
 	
 	if Input.is_action_just_pressed("action_attack") and !is_busy():
 		moveable = false

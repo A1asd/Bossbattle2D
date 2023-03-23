@@ -40,7 +40,7 @@ func as_bool()->bool:
 		YarnGlobals.ValueType.Number:
 			return number!=0
 		YarnGlobals.ValueType.Str:
-			return !string.empty()
+			return !string.is_empty()
 		YarnGlobals.ValueType.Boolean:
 			return boolean
 	return false
@@ -65,7 +65,7 @@ func set_value(value):
 		return
 
 	match typeof(value):
-		TYPE_INT,TYPE_REAL:
+		TYPE_INT,TYPE_FLOAT:
 			type = YarnGlobals.ValueType.Number
 			number = value
 		TYPE_STRING:

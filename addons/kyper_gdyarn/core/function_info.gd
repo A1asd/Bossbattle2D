@@ -14,7 +14,7 @@ var function : FuncRef
 
 var returnsValue : bool = false
 
-func _init(name:String, paramCount : int, function : FuncRef = null,returnsValue : bool = false):
+func _init(name:String,paramCount : int,function : FuncRef = null,returnsValue : bool = false):
     self.name = name 
     self.paramCount = paramCount
     self.function = function

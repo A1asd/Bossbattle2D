@@ -166,7 +166,7 @@ func run_instruction(instruction)->bool:
 			pass
 		YarnGlobals.ByteCode.JumpTo:
 			#jump to named label
-			_state .programCounter = find_label_instruction(instruction.operands[0].value)-1
+			_state super.programCounter = find_label_instruction(instruction.operands[0].value)-1
 		YarnGlobals.ByteCode.RunLine:
 			#look up string from string table
 			#pass it to client as line
@@ -283,7 +283,7 @@ func run_instruction(instruction)->bool:
 			#run a node 
 			var name : String 
 
-			if (instruction.operands.size() == 0 || instruction.operands[0].value.empty()):
+			if (instruction.operands.size() == 0 || instruction.operands[0].value.is_empty()):
 				#get string from stack and jump to node with that name
 				name = _state.peek_value().value()
 			else : 

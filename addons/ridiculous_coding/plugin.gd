@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 var shake = 0.0
@@ -14,7 +14,7 @@ const Newline = preload("newline.tscn")
 func _enter_tree():
 	var editor = get_editor_interface()
 	var script_editor = editor.get_script_editor()
-	script_editor.connect("editor_script_changed", self, "editor_script_changed")
+	script_editor.connect("editor_script_changed",Callable(self,"editor_script_changed"))
 
 
 func _exit_tree():
@@ -28,26 +28,26 @@ func get_all_text_editors(parent : Node):
 			get_all_text_editors(child)
 			
 		if child is TextEdit:
-			editors[child] = { "text": child.text, "line": child.cursor_get_line() }
+			editors[child] = { "text": child.text, "line": child.get_caret_line() }
 			
-			if child.is_connected("cursor_changed", self, "cursor_changed"):
-				child.disconnect("cursor_changed", self, "cursor_changed")
-			child.connect("cursor_changed", self, "cursor_changed", [child])
+			if child.is_connected("cursor_changed",Callable(self,"cursor_changed")):
+				child.disconnect("cursor_changed",Callable(self,"cursor_changed"))
+			child.connect("cursor_changed",Callable(self,"cursor_changed").bind(child))
 				
-			if child.is_connected("text_changed", self, "text_changed"):
-				child.disconnect("text_changed", self, "text_changed")
-			child.connect("text_changed", self, "text_changed", [child])
+			if child.is_connected("text_changed",Callable(self,"text_changed")):
+				child.disconnect("text_changed",Callable(self,"text_changed"))
+			child.connect("text_changed",Callable(self,"text_changed").bind(child))
 
-			if child.is_connected("gui_input", self, "gui_input"):
-				child.disconnect("gui_input", self, "gui_input")
-			child.connect("gui_input", self, "gui_input")
+			if child.is_connected("gui_input",Callable(self,"gui_input")):
+				child.disconnect("gui_input",Callable(self,"gui_input"))
+			child.connect("gui_input",Callable(self,"gui_input"))
 
 
 func gui_input(event):
 	# Get last key typed
 	if event is InputEventKey and event.pressed:
 		event = event as InputEventKey
-		last_key = OS.get_scancode_string(event.get_scancode_with_modifiers())
+		last_key = OS.get_keycode_string(event.get_keycode_with_modifiers())
 		
 
 func editor_script_changed(script):
@@ -63,9 +63,9 @@ func _process(delta):
 	
 	if shake > 0:
 		shake -= delta
-		editor.get_base_control().rect_position = Vector2(rand_range(-shake_intensity,shake_intensity), rand_range(-shake_intensity,shake_intensity))
+		editor.get_base_control().position = Vector2(randf_range(-shake_intensity,shake_intensity), randf_range(-shake_intensity,shake_intensity))
 	else:
-		editor.get_base_control().rect_position = Vector2.ZERO
+		editor.get_base_control().position = Vector2.ZERO
 		
 	timer += delta
 
@@ -87,7 +87,7 @@ func cursor_changed(textedit):
 		editors.clear()
 		get_all_text_editors(editor.get_script_editor())
 		
-	editors[textedit]["line"] = textedit.cursor_get_line()
+	editors[textedit]["line"] = textedit.get_caret_line()
 
 
 func text_changed(textedit : TextEdit):
@@ -101,8 +101,8 @@ func text_changed(textedit : TextEdit):
 		get_all_text_editors(editor.get_script_editor())
 		
 	# Get line and character count
-	var line = textedit.cursor_get_line()
-	var column = textedit.cursor_get_column()
+	var line = textedit.get_caret_line()
+	var column = textedit.get_caret_column()
 	
 	# Compensate for tab size
 	var tab_size = settings.get_setting("text_editor/indent/size")
@@ -128,7 +128,7 @@ func text_changed(textedit : TextEdit):
 	var line_spacing = settings.get_setting("text_editor/theme/line_spacing")
 	
 	# Load editor font
-	var font : DynamicFont = DynamicFont.new()
+	var font : FontFile = FontFile.new()
 	font.font_data = load(settings.get_setting("interface/editor/code_font"))
 	font.size = settings.get_setting("interface/editor/code_font_size")
 	var fontsize = font.get_string_size(" ")
@@ -144,7 +144,7 @@ func text_changed(textedit : TextEdit):
 			timer = 0.0
 			
 			# Draw the thing
-			var thing = Boom.instance()
+			var thing = Boom.instantiate()
 			thing.position = pos
 			thing.destroy = true
 			thing.last_key = last_key
@@ -158,7 +158,7 @@ func text_changed(textedit : TextEdit):
 			timer = 0.0
 			
 			# Draw the thing
-			var thing = Blip.instance()
+			var thing = Blip.instantiate()
 			thing.position = pos
 			thing.destroy = true
 			thing.last_key = last_key
@@ -168,9 +168,9 @@ func text_changed(textedit : TextEdit):
 			shake(0.05, 5)
 			
 		# Newline
-		if textedit.cursor_get_line() != editors[textedit]["line"]:
+		if textedit.get_caret_line() != editors[textedit]["line"]:
 			# Draw the thing
-			var thing = Newline.instance()
+			var thing = Newline.instantiate()
 			thing.position = pos
 			thing.destroy = true
 			textedit.add_child(thing)
@@ -179,4 +179,4 @@ func text_changed(textedit : TextEdit):
 			shake(0.05, 5)
 
 	editors[textedit]["text"] = textedit.text
-	editors[textedit]["line"] = textedit.cursor_get_line()
+	editors[textedit]["line"] = textedit.get_caret_line()

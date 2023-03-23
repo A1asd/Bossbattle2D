@@ -82,7 +82,7 @@ static func compile_string(source:String,filename,program:YarnProgram,strings:Di
 			# print(sourceLines[lineNumber])
 			lineNumber+=1
 			
-			if !line.empty():
+			if !line.is_empty():
 				var result = headerProperty.search(line)
 				if result != null : 
 					var field : String = result.get_string("field")
@@ -97,7 +97,7 @@ static func compile_string(source:String,filename,program:YarnProgram,strings:Di
 		
 		lineNumber+=1
 		#past header
-		var bodyLines : PoolStringArray = []
+		var bodyLines : PackedStringArray = []
 		
 		while lineNumber < sourceLines.size() && sourceLines[lineNumber]!="===":
 			bodyLines.append(sourceLines[lineNumber])
@@ -105,7 +105,7 @@ static func compile_string(source:String,filename,program:YarnProgram,strings:Di
 
 		lineNumber+=1
 
-		body = bodyLines.join('\n')
+		body = '\n'.join(bodyLines)
 		var lexer = Lexer.new()
 
 		var tokens : Array = lexer.tokenize(body)
@@ -119,7 +119,7 @@ static func compile_string(source:String,filename,program:YarnProgram,strings:Di
 
 		parserNode.name = title
 		parsedNodes.append(parserNode)
-		while lineNumber < sourceLines.size() && sourceLines[lineNumber].empty():
+		while lineNumber < sourceLines.size() && sourceLines[lineNumber].is_empty():
 			lineNumber+=1
 
 	#--- End parsing nodes---
@@ -148,7 +148,7 @@ func compile_node(program:YarnProgram,parsedNode)->void:
 		nodeCompiled.tags = parsedNode.tags
 
 		#raw text
-		if parsedNode.source != null && !parsedNode.source.empty():
+		if parsedNode.source != null && !parsedNode.source.is_empty():
 			nodeCompiled.sourceId = register_string(parsedNode.source,parsedNode.name,
 			"line:"+parsedNode.name, 0, [])
 		else:
@@ -191,7 +191,7 @@ func register_string(text:String,nodeName:String,id:String="",lineNumber:int=-1,
 
 	var implicit : bool
 
-	if id.empty():
+	if id.is_empty():
 		lineIdUsed = "%s-%s-%d" % [self._fileName,nodeName,self._stringCount]
 		self._stringCount+=1
 
@@ -343,7 +343,7 @@ func generate_shortcut_group(node,shortcutGroup):
 #blocks are just groups of statements
 func generate_block(node,statements:Array=[]):
 	# print("generating block")
-	if !statements.empty():
+	if !statements.is_empty():
 		for statement in statements:
 			generate_statement(node,statement) 
 	
@@ -379,7 +379,7 @@ func generate_option(node,option):
 	# print("generating option")
 	var destination : String = option.destination
 
-	if option.label == null || option.label.empty():
+	if option.label == null || option.label.is_empty():
 		#jump to another node
 		emit(YarnGlobals.ByteCode.RunNode,node,[Operand.new(destination)])
 	else : 
@@ -491,9 +491,9 @@ func emit_error(error : int)->void:
 
 
 static func print_tokens(tokens:Array=[]):
-	var list : PoolStringArray = []
+	var list : PackedStringArray = []
 	list.append("\n")
 	for token in tokens:
 		list.append("%s (%s line %s)\n"%[YarnGlobals.token_type_name(token.type),token.value,token.lineNumber])
 	print("TOKENS:")
-	print(list.join("")) 
+	"".join(print(list)) 

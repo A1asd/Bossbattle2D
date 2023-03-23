@@ -1,8 +1,8 @@
-extends KinematicBody2D
+extends CharacterBody2D
 class_name BaseActor
 
-export (int) var max_health
-export (int) var cur_health
+@export var max_health :int
+@export var cur_health :int
 
 signal death
 signal damaged

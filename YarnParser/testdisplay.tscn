@@ -13,38 +13,38 @@ _textDisplay = NodePath("Label")
 _options = [ NodePath("option0"), NodePath("option1"), NodePath("option2") ]
 
 [node name="Label" type="Label" parent="."]
-margin_left = 119.403
-margin_top = 33.6516
-margin_right = 946.403
-margin_bottom = 142.652
+offset_left = 119.403
+offset_top = 33.6516
+offset_right = 946.403
+offset_bottom = 142.652
 text = "Text here"
 
 [node name="option0" type="Button" parent="."]
-margin_left = 125.0
-margin_top = 137.0
-margin_right = 421.0
-margin_bottom = 157.0
+offset_left = 125.0
+offset_top = 137.0
+offset_right = 421.0
+offset_bottom = 157.0
 text = "option"
 
 [node name="option1" type="Button" parent="."]
-margin_left = 124.0
-margin_top = 167.0
-margin_right = 418.0
-margin_bottom = 187.0
+offset_left = 124.0
+offset_top = 167.0
+offset_right = 418.0
+offset_bottom = 187.0
 text = "option"
 
 [node name="option2" type="Button" parent="."]
-margin_left = 124.0
-margin_top = 199.0
-margin_right = 425.0
-margin_bottom = 219.0
+offset_left = 124.0
+offset_top = 199.0
+offset_right = 425.0
+offset_bottom = 219.0
 text = "option"
 
 [node name="Button" type="Button" parent="."]
-margin_left = 873.864
-margin_top = 116.674
-margin_right = 913.864
-margin_bottom = 136.674
+offset_left = 873.864
+offset_top = 116.674
+offset_right = 913.864
+offset_bottom = 136.674
 text = "next"
 __meta__ = {
 "_edit_use_anchors_": false

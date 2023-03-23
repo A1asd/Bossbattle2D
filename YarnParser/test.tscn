@@ -22,10 +22,10 @@ script = ExtResource( 3 )
 _wordsPerSecond = 8.118
 
 [node name="StorageDisplay" type="Label" parent="."]
-margin_left = 14.0
-margin_top = 310.0
-margin_right = 133.0
-margin_bottom = 510.0
+offset_left = 14.0
+offset_top = 310.0
+offset_right = 133.0
+offset_bottom = 510.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false

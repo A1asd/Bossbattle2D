@@ -185,7 +185,7 @@ func tokenize(text:String)->Array:
 
 	_currentState = _defaultState
 
-	var lines : PoolStringArray = text.split(LINE_SEPARATOR)
+	var lines : PackedStringArray = text.split(LINE_SEPARATOR)
 	lines.append("")
 
 	var lineNumber : int = 1
@@ -347,7 +347,7 @@ class Token:
 	var paramCount : int 
 	var lexerState : String
 
-	func _init(type:int,state: LexerState, lineNumber:int = -1,column:int = -1,value:String =""):
+	func _init(type:int,state: LexerState,lineNumber:int = -1,column:int = -1,value:String =""):
 		self.type = type
 		self.lexerState = state.stateName
 		self.lineNumber = lineNumber
@@ -385,7 +385,7 @@ class LexerState:
 			if rule.delimitsText:
 				delimiters.append("%s" % rule.regex.get_pattern().substr(2))
 
-		var pattern = "\\G((?!%s).)*" % [PoolStringArray(delimiters).join("|")]
+		var pattern = "\\G((?!%s).)*" % ["|".join(PackedStringArray(delimiters))]
 		var rule : Rule = add_transition(type,state)
 		rule.regex = RegEx.new()
 		rule.regex.compile(pattern)
@@ -407,7 +407,7 @@ class Rule:
 	var isTextRule : bool
 	var delimitsText : bool
 
-	func _init(type : int , regex : String, enterState : String, delimitsText:bool):
+	func _init(type : int,regex : String,enterState : String,delimitsText:bool):
 		self.tokenType = type
 		self.regex = RegEx.new()
 		self.regex.compile(regex)

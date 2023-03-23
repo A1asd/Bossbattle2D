@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node2D
 
 var destroy = false
@@ -6,12 +6,12 @@ var last_key = ""
 
 func _ready():
 	$AudioStreamPlayer.play()
-	$AnimatedSprite.frame = 0
-	$AnimatedSprite.play("default")
+	$AnimatedSprite2D.frame = 0
+	$AnimatedSprite2D.play("default")
 	$AnimationPlayer.play("default")
 	$Timer.start()
 	$Label.text = last_key
-	$Label.modulate = Color(rand_range(0,2), rand_range(0,2), rand_range(0,2))
+	$Label.modulate = Color(randf_range(0,2), randf_range(0,2), randf_range(0,2))
 
 func _on_Timer_timeout():
 	if destroy:

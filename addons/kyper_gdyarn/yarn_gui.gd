@@ -1,18 +1,18 @@
 extends Control
 
-export(NodePath) var _textDisplay
+@export var _textDisplay: NodePath
 
-export(Array,NodePath) var _options
+@export var _options # (Array,NodePath)
 
 const CHARS_PER_WORD : int = 6
 #1 word is  6 chars per second (anything < 0 == instant)
-export(float,-1,100) var _wordsPerSecond = 1
+@export var _wordsPerSecond = 1 # (float,-1,100)
 var lineElapsed : float = 0 
 var totalTime : float = 0
 var lineFinished : bool = false
 
-export(bool) var _autoNext = false #automatically move to next line
-export(float,0,2) var _autoNextWait = 1.75 #time to wait until next line when autonext is on
+@export var _autoNext: bool = false #automatically move to next line
+@export var _autoNextWait = 1.75 #time to wait until next line when autonext is on # (float,0,2)
 var autoNextElapsed : float = 0 
 var nextLineRequested : bool = false #wether the next line has been requested by auto next - if yes then dont do it again
 
@@ -49,7 +49,7 @@ func _process(delta):
 		if !lineFinished:
 			emit_signal("line_finished")
 			finish_line(false)
-			textDisplay.text = _currentLine if !_currentLine.empty() else textDisplay.text
+			textDisplay.text = _currentLine if !_currentLine.is_empty() else textDisplay.text
 		lineFinished = true
 		
 		if _autoNext && !nextLineRequested:
@@ -69,7 +69,7 @@ func _process(delta):
 	
 
 func feed_line(line:String)->bool:
-	if(_currentLine!= null && !_currentLine.empty()):#current line not finished so wait
+	if(_currentLine!= null && !_currentLine.is_empty()):#current line not finished so wait
 		return false
 	_currentLine = line
 	totalTime = line.length() / (_wordsPerSecond * CHARS_PER_WORD)
@@ -87,10 +87,10 @@ func feed_line(line:String)->bool:
 	return true
 
 func finish_line(next_line:bool = true):
-	if _currentLine.empty() && next_line && _textDisplay!=null:
+	if _currentLine.is_empty() && next_line && _textDisplay!=null:
 		textDisplay.visible = false
 		emit_signal("dialogue_finished")
-	elif next_line && !_currentLine.empty() && !lineFinished:
+	elif next_line && !_currentLine.is_empty() && !lineFinished:
 		lineElapsed = totalTime
 		return
 
@@ -102,7 +102,7 @@ func finish_line(next_line:bool = true):
 		&& _dialogue.get_exec_state()!=YarnGlobals.ExecutionState.WaitingForOption):
 		if next_line:
 			_currentLine = ""
-		if _dialogueRunner.next_line.empty():
+		if _dialogueRunner.next_line.is_empty():
 			_dialogue.resume()
 		else:
 			_dialogueRunner.consume_line()
@@ -118,10 +118,10 @@ func feed_options(options:Array):
 			printerr("Tried to display more options than available gui components")
 			break
 		self.options[i].visible = true
-		if self.options[i].is_connected("pressed",self,"select_option"):
-			self.options[i].disconnect("pressed",self,"select_option")
+		if self.options[i].is_connected("pressed",Callable(self,"select_option")):
+			self.options[i].disconnect("pressed",Callable(self,"select_option"))
 
-		self.options[i].connect("pressed",self,"select_option",[i])
+		self.options[i].connect("pressed",Callable(self,"select_option").bind(i))
 		self.options[i].text = options[i]
 
 		#self.options[i].set_text(options[i].line.)

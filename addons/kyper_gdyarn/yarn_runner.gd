@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 
 const YarnGlobals = preload("res://addons/kyper_gdyarn/autoloads/execution_states.gd")
@@ -12,18 +12,18 @@ const DisplayInterface = preload("res://addons/kyper_gdyarn/yarn_gui.gd")
 
 
 # String is a path to a PNG file in the global filesystem.
-export(Array,String, FILE, GLOBAL, "*.yarn") var _yarnFiles setget set_file
+@export var _yarnFiles setget set_file # (Array,String, FILE, GLOBAL, "*.yarn")
 
-export(String) var _startNode = "Start"
+@export var _startNode: String = "Start"
 
-export(bool) var _autoStart = false
+@export var _autoStart: bool = false
 
-export(NodePath) var _variableStorage
+@export var _variableStorage: NodePath
 
-export(NodePath) var _displayInterface
+@export var _displayInterface: NodePath
 
-export(bool) var _showTokens = false
-export(bool) var _printSyntaxTree = false
+@export var _showTokens: bool = false
+@export var _printSyntaxTree: bool = false
 
 
 #programs
@@ -46,7 +46,7 @@ var commandHandlers :  Dictionary = {} #funcRef map for text commands
 
 func _ready():
 	if Engine.editor_hint:
-		#connect("script_changed",self,"set_file")
+		#connect("script_changed",Callable(self,"set_file"))
 
 		pass 
 	else:
@@ -87,7 +87,7 @@ func set_file(arr):
 		if arr.size() > _yarnFiles.size(): 
 			#case where we added a new script
 			#assume it was added at the end
-			if (!arr.back().empty()):
+			if (!arr.back().is_empty()):
 				var f = File.new()
 				f.open(arr.back(),File.READ)
 				var source : String = f.get_as_text()
@@ -112,7 +112,7 @@ func set_file(arr):
 		print("difference %s"%index)
 		if index != -1:
 			
-			if (!arr[index].empty()):
+			if (!arr[index].is_empty()):
 				var f = File.new()
 				f.open(arr[index],File.READ)
 				var source : String = f.get_as_text()
